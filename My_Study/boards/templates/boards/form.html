@@ -1,0 +1,29 @@
+{% extends 'boards/base.html' %}
+{% block content %}
+<!--{% load crispy_forms_tags %}-->
+{% load bootstrap4 %}
+
+<!--들어오는 요청에 따라 다르게 출력-->
+{% if request.resolver_match.url_name == 'create' %}
+    <h1>NEW Board</h1>
+{% else %}
+    <h1>EDIT Board</h1>
+{% endif %}
+
+<!--1-->
+<form method='POST'>
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" value="submit" class="btn btn-info">
+</form>
+
+<!--2-->
+<!--{% crispy form %}-->
+
+<!--뒤로가기 버튼 동작 다르게 하기-->
+{% if request.resolver_match.url_name == 'create' %}
+    <a href="{% url 'boards:list' %}">[BACK]</a>
+{% else %}
+    <a href="{% url 'boards:detail' board.pk %}">[BACK]</a>
+{% endif %}
+{% endblock %}

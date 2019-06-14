@@ -1,0 +1,17 @@
+{% extends 'movies/base.html' %} 
+{% block title %}movies{% endblock %} 
+{% block body %}
+<h2>< INFORMATION ></h2>
+
+    <p>영화명 : {{ movie.title }}</p>
+    <p>누적 관객수 : {{ movie.audience }}</p>
+    <p>장르 : {{ movie.genre }}</p>
+    <p>평점 : {{ movie.score }}</p>
+    <p>포스터 이미지 URL : {{ movie.poster_url }}</p>
+    <p>영화 소개 : {{ movie.description }}</p>
+    <hr>
+    <a href="/movies/">[목록]</a>
+    <a href="/movies/update/">[수정]</a>
+    <a href="/movies/{{movie.id}}/delete/" onclick="return confirm('진짜 지워?')">[삭제]</a>
+
+{% endblock %}

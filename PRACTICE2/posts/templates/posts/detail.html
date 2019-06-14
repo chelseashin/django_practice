@@ -1,0 +1,36 @@
+{% extends 'posts/base.html' %}
+
+{% block content %}
+<h4>DETAIL</h4>
+<hr>
+<p>제목 : {{ post.title }}</p>
+<p>내용 : {{ post.content }}</p>
+<p>{{ post.like_users.count }}명이 좋아합니다!</p>
+<b>좋아요한 유저 보기</b>
+{% for user in post.like_users.all %}
+    <li>{{ user }}</li>
+{% endfor %}
+
+{% if request.user == post.user %}
+    <a href="{% url 'posts:update' post.pk %}">[수정]</a>
+    <form action="{% url 'posts:delete' post.pk %}" method="POST" style="display: inline;">
+        {% csrf_token %}
+        <input type="submit" value="삭제!">
+    </form>
+{% endif %}
+<hr>
+<b>* 댓글작성 *</b>
+<p>{{ post.comment_set.count }}개의 댓글.</p>
+<form action="{% url 'posts:comment_create' post.pk %}" method="POST">
+    {% csrf_token %}
+    {{ comment_form }}
+    <input type="submit" value="작성">
+</form>
+{% for comment in post.comment_set.all %}
+    <p><b>{{ comment.user }}</b> : {{ comment.content }}</p>
+    <form action="{% url 'posts:comment_delete' post.pk comment.pk %}" method="POST" style="display: inline;">
+        {% csrf_token %}
+        <input type="submit" value="삭제">
+    </form>
+{% endfor %}
+{% endblock %}

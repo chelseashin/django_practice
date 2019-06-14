@@ -1,0 +1,16 @@
+{% extends "friends/base.html" %}
+
+{% block title%}FRIENDS READ{% endblock %}
+
+
+{% block body %}
+
+<h3>friends</h3>
+<a href="/friends/create/">[친구 등록하기]</a>
+{% for friend in friends %}
+    <p>{{friend.name}}</p>
+    <p>{{friend.email}}</p>
+    <a href="/friends/{{friend.pk}}/delete/">[삭제]</a>
+    <hr>
+{% endfor %}
+{% endblock %}

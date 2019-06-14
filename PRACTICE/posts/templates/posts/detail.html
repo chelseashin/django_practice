@@ -1,0 +1,38 @@
+{% extends 'posts/base.html' %}
+
+{% block content %}
+<h3>DETAIL</h3>
+<hr>
+<p>제목 : {{ post.title }}</p>
+<p>내용 : {{ post.content }}</p>
+<p>{{ post.like_users.count }}명이 좋아요를 눌렀습니다.</p>
+<b>좋아요한 유저 보기</b>
+{% for user in post.like_users.all %}
+    <li>{{ user }}</li>
+{% endfor %}
+<hr>
+<p>* 댓글작성</p>
+<form action="{% url 'posts:comment_create' post.pk %}" method="POST">
+    {% csrf_token %}
+    {{ comment_form }}
+    <input type="submit" value="작성">
+</form>
+<hr>
+
+<p>{{ post.comment_set.count }}개의 댓글이 달렸습니다.</p>
+{% for comment in post.comment_set.all %}
+    <p><b>{{ comment.user }}</b>: {{ comment.content }}</p>
+    <form action="{% url 'posts:comment_delete' post.pk comment.pk %}" method="POST" style="display: inline;">
+        {% csrf_token %}
+        <input type="submit" value="삭제">
+    </form>
+{% endfor %}
+<hr>
+<a href="{% url 'posts:update' post.pk %}">[수정]</a>
+<form action="{% url 'posts:delete' post.pk %}" method="POST" style="display: inline;">
+    {% csrf_token %}
+    <input type="submit" value="삭제!">
+</form>
+<hr>
+<a href="{% url 'posts:list' %}">[Back]</a>
+{% endblock %}

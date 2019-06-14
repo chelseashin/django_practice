@@ -1,0 +1,32 @@
+{% extends 'posts/base.html' %}
+
+{% block content %}
+<h3>LIST</h3>
+<a href="{% url 'posts:create' %}">새 글 작성</a>
+<hr>
+{% for post in posts %}
+    <p>{{ post.pk }}번째 글</p>
+    <p>제목 : {{ post.title }}</p>
+    <p>작성자 : {{ post.user }}</p>
+    <a href="{% url 'posts:detail' post.pk %}">글 보러가기</a>
+    <br>
+    <!--팔로우-->
+    {% if user in post.user.followers.all %}
+        <a href="{% url 'accounts:follow' post.user.pk %}">언팔로우</a>
+    {% else %}
+        <a href="{% url 'accounts:follow' post.user.pk %}">팔로우</a>
+    {% endif %}
+    <b>{{ post.user.followers.count }}명이 {{ post.user }}를 팔로우합니다.</b>
+    <br>
+    <!--좋아요-->
+    {% if user in post.like_users.all %}
+        <a href="{% url 'posts:like' post.pk %}">안 좋아요</a>
+    {% else %}
+        <a href="{% url 'posts:like' post.pk %}">좋아요</a>
+    {% endif %}
+    <b>{{ post.like_users.count }}명이 좋아요를 눌렀습니다.</b>
+    <!--<a href="{% url 'posts:like"-->
+    <hr>
+{% endfor %}
+
+{% endblock %}

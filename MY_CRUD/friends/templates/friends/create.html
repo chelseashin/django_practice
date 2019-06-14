@@ -1,0 +1,15 @@
+{% extends "friends/base.html" %}
+{% block title %}CREATE{% endblock %}
+
+{% block body %} 
+<h2>친구정보등록</h2>
+<form action = '/friends/create/'>
+    <label for ="title">NAME</label>
+    <input type="text" name="name" id="name"/><br>
+    <label for ="email">EMAIL</label>
+    <input type="text" name="email" id="email"/><br>
+    <input type="datetime" name="birthday"><br>
+    <input type="" name="age"><br>
+    <input type="submit" value="submit"/>
+</form>
+{% endblock %}
